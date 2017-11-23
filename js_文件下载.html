@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<!--<a href="http://192.168.1.126:8081/Public/Uploads/family/angle/20171123/5a1671c05fc4d.png" target="_blank">下载</a>-->
+	</body>
+	<script type="text/javascript">
+		
+		window.downloadFile = function (sUrl) {
+
+		    //iOS devices do not support downloading. We have to inform user about this.
+		    if (/(iP)/g.test(navigator.userAgent)) {
+		        alert('Your device does not support files downloading. Please try again in desktop browser.');
+		        return false;
+		    }
+		
+		    //If in Chrome or Safari - download via virtual link click
+		    if (window.downloadFile.isChrome || window.downloadFile.isSafari) {
+		        //Creating new link node.
+		        var link = document.createElement('a');
+		        link.href = sUrl;
+				
+				
+		        if (link.download !== undefined) {
+		            //Set HTML5 download attribute. This will prevent file from opening if supported.
+		            var fileName = sUrl.substring(sUrl.lastIndexOf('/') + 1, sUrl.length);
+		            link.download = fileName;
+		        }
+		
+		        //Dispatching click event.
+		        if (document.createEvent) {
+		            var e = document.createEvent('MouseEvents');
+		            e.initEvent('click', true, true);
+		            link.dispatchEvent(e);
+		            return true;
+		        }
+		    }
+		
+		    // Force file download (whether supported by server).
+		    if (sUrl.indexOf('?') === -1) {
+		        sUrl += '?download';
+		    }
+		
+		    window.open(sUrl, '_blank');
+		    
+		    return true;
+		}
+		//判断浏览器的类型
+		function n(){
+			window.downloadFile.isChrome = navigator.userAgent.toLowerCase().indexOf('chrome') > -1;
+			window.downloadFile.isSafari = navigator.userAgent.toLowerCase().indexOf('safari') > -1;
+		}
+		//n();
+		downloadFile("http://192.168.1.126:8081/Public/Uploads/family/angle/20171123/5a167c9a119e8.xlsx")
+		
+	</script>
+</html>
